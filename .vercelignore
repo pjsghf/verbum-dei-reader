@@ -1,0 +1,33 @@
+# Exclusion file for Vercel deployment uploads
+# Only client-side static web files should be deployed.
+
+# Git configuration
+.git/
+.github/
+
+# Dependency and environment directories
+node_modules/
+.vercel/
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python scripts (development-only)
+*.py
+
+# Raw data and extracted texts
+*.txt
+
+# PDFs and original literature
+Conteúdo/
+
+# Development scratch workspace
+scratch/
+docs/
+.gitignore
+.vercelignore
+README.md
+*.md

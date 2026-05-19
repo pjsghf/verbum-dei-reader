@@ -12,3 +12,22 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python scripts (development-only)
+*.py
+
+# Extracted texts and raw data
+*.txt
+
+# PDFs and original literature
+Conteúdo/
+
+# Development scratch workspace
+scratch/
+

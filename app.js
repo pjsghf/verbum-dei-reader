@@ -177,7 +177,7 @@ function renderLibrary() {
     // Renderizar a capa de forma condicional: usa a imagem se houver, ou fallback de texto se não houver
     const hasCover = book.cover && book.cover !== "Sem Capa";
     const coverHtml = hasCover
-      ? `<div class="book-cover-3d" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.25)), url('${coverUrl}');"></div>`
+      ? `<div class="book-cover-3d" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.25)), url('${book.cover}');"></div>`
       : `<div class="book-cover-3d" style="background-color: var(--bg-surface); border: 1.5px solid var(--border-gold); display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1rem; border-radius: 6px;">
           <div style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--gold-primary); letter-spacing: 3px; font-weight: 800; text-transform: uppercase; text-align: center;">VERBUM DEI</div>
           <div style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 900; color: var(--txt-primary); text-align: center; line-height: 1.35;">${book.title}</div>

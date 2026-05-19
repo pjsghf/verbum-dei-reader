@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Verbum Dei — Biblioteca Interativa</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Acesse os mini-apps e livros digitais sagrados do projeto Verbum Dei em uma experiência de leitura premium e interativa.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Google Fonts: Cinzel for headers, Inter for UI/Body, Georgia for quotes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Georgia:ital,wght@1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  
+  <!-- Estilos customizados (Kingdom Aesthetic) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Elemento Decorativo: Partículas flutuantes e fundo de neblina mística -->
+  <div class="misty-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div id="app-container">
+    
+    <!-- ======================================================== -->
+    <!-- TELA 1: PORTAL DA BIBLIOTECA (MENU PRINCIPAL INTERATIVO) -->
+    <!-- ======================================================== -->
+    <main id="library-screen" class="screen active">
+      <header class="library-header">
+        <div class="library-top-bar">
+          <div class="brand-badge">VERBUM DEI</div>
+          <button id="btn-theme-toggle-library" class="theme-toggle-btn" aria-label="Alternar Modo de Cores">
+            <span class="theme-btn-icon">🌙</span>
+            <span class="theme-btn-text">Modo Noturno</span>
+          </button>
+        </div>
+        <h1 class="library-title">Leituras Divinas</h1>
+        <p class="library-subtitle">Escolha uma leitura divina abaixo para iniciar sua leitura simples, confortável e ampliada.</p>
+      </header>
+
+      <!-- Grid de Livros (Sera preenchido dinamicamente pelo JS) -->
+      <section class="library-grid" id="books-grid">
+        <!-- Os cartões de livros serão gerados dinamicamente via JS. 
+             Eles usarão um efeito de rotação 3D ao passar o mouse. -->
+      </section>
+
+      <footer class="library-footer">
+        <p>© 2026 Verbum Dei. Todos os direitos reservados. Design e Tecnologia Soberana.</p>
+      </footer>
+    </main>
+
+    <!-- ======================================================== -->
+    <!-- TELA 2: INTERFACE DO E-READER (LEITOR DIGITAL PREMIUM)  -->
+    <!-- ======================================================== -->
+    <article id="reader-screen" class="screen">
+      
+      <!-- Topo do Leitor: Dividido em duas linhas espaçosas para evitar qualquer sobreposição no mobile -->
+      <header class="reader-header-container">
+        <!-- Linha 1: Navegação Principal -->
+        <nav class="reader-navbar">
+          <button id="btn-back-to-library" class="nav-btn" aria-label="Voltar para a biblioteca">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Voltar</span>
+          </button>
+
+          <!-- Título Centralizado Espaçoso -->
+          <div class="reader-meta">
+            <h2 id="reader-book-title" class="reader-title">Título do Livro</h2>
+            <span id="reader-chapter-indicator" class="reader-chapter-label">Capítulo I</span>
+          </div>
+
+          <button id="btn-toggle-sidebar" class="nav-btn index-btn" aria-label="Ver Capítulos" title="Capítulos">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Índice</span>
+          </button>
+        </nav>
+
+        <!-- Linha 2: Barra de Acessibilidade dedicada para ajuste de texto e cores (Grandes e sem aperto) -->
+        <div class="reader-accessibility-bar">
+          <button id="btn-text-decrease" class="a11y-action-btn" aria-label="Diminuir tamanho da letra">
+            <span>A-</span> Letra Menor
+          </button>
+          
+          <button id="btn-theme-toggle" class="a11y-action-btn theme-toggle-action" aria-label="Mudar Modo de Cores">
+            <span>🌙</span> Modo Noturno
+          </button>
+          
+          <button id="btn-text-increase" class="a11y-action-btn" aria-label="Aumentar tamanho da letra">
+            <span>A+</span> Letra Maior
+          </button>
+        </div>
+      </header>
+
+      <!-- Barra de Progresso Superior Integrada (Dourada Metálica) -->
+      <div class="progress-bar-container">
+        <div id="reader-progress-bar" class="progress-bar-fill"></div>
+      </div>
+
+      <!-- Área de Leitura Principal -->
+      <div class="reader-viewport">
+        <!-- Botão Lateral Esquerdo (Desktop) -->
+        <button id="btn-page-prev-side" class="page-nav-side prev" aria-label="Página Anterior">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Container do Texto da Página -->
+        <div class="reader-content-box" id="reader-page-content">
+          <!-- Conteúdo da página HTML renderizado via JS -->
+        </div>
+
+        <!-- Botão Lateral Direito (Desktop) -->
+        <button id="btn-page-next-side" class="page-nav-side next" aria-label="Próxima Página">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de Paginação Inferior (Mobile/Geral) -->
+      <footer class="reader-pagination-bar">
+        <button id="btn-page-prev" class="pagination-btn" aria-label="Página Anterior">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Anterior</span>
+        </button>
+
+        <span id="reader-page-indicator" class="page-counter">Página 1 de 10</span>
+
+        <button id="btn-page-next" class="pagination-btn" aria-label="Próxima Página">
+          <span>Próxima</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </footer>
+
+      <!-- Sumário Lateral Deslizante (Capítulos) -->
+      <aside id="reader-sidebar" class="reader-sidebar">
+        <div class="sidebar-header">
+          <h3 class="sidebar-title">Índice</h3>
+          <button id="btn-close-sidebar" class="close-btn" aria-label="Fechar sumário">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <ul id="sidebar-chapters-list" class="chapters-list">
+          <!-- Capítulos gerados dinamicamente via JS -->
+        </ul>
+      </aside>
+      <!-- Overlay para fechar sidebar clicando fora -->
+      <div id="reader-sidebar-overlay" class="sidebar-overlay"></div>
+    </article>
+
+  </div>
+
+  <!-- Banco de Dados e Lógica Script -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1182 @@
+/* ==========================================================================
+   VERBUM DEI - Kingdom Accessibility Design System (Acessibilidade Pró)
+   Redesenhado com foco em simplicidade, estabilidade visual e extremo conforto
+   de leitura para o público idoso. Sem poluição visual ou efeitos confusos.
+   ========================================================================== */
+
+/* 1. Reset e Configurações Globais */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Ocultar barras de rolagem nativas */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+:root {
+  /* Tipografia Ancestral e Moderna */
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-quote: 'Georgia', serif;
+  --font-cursive: 'Great Vibes', cursive;
+  
+  /* Transições Suaves */
+  --transition-premium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.15s ease;
+  
+  /* Medidas de Acessibilidade */
+  --btn-height-large: 54px;
+  --btn-height-medium: 48px;
+  --btn-radius: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   TEMA NOTURNO / ESCURO (body.theme-dark)
+   -------------------------------------------------------------------------- */
+body.theme-dark {
+  --bg-main: #0B0F19;         /* Abissal escuro suave */
+  --bg-surface: #141B2D;      /* Painel de leitura e cartões */
+  --bg-navbar: #0D1322;       /* Barra superior e inferior */
+  --txt-primary: #F1F5F9;     /* Warm white de altíssima legibilidade */
+  --txt-secondary: #94A3B8;   /* Cinza médio legível */
+  --txt-muted: #64748B;       /* Cinza escuro para legendas menores */
+  --gold-primary: #F5C542;    /* Dourado imperial vibrante */
+  --gold-dim: #D4AF37;        /* Dourado de menor emissão */
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(245, 197, 66, 0.3);
+  --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --glow-effect: 0 0 20px rgba(245, 197, 66, 0.15);
+  --overlay-bg: rgba(0, 0, 0, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   TEMA CLARO / PAPEL PÓLEN CONFORTO (body.theme-light)
+   -------------------------------------------------------------------------- */
+body.theme-light {
+  --bg-main: #FAF7F2;         /* Creme pólen de baixíssima luz azul (papel físico) */
+  --bg-surface: #FFFFFF;      /* Branco sólido para destacar cartões e áreas */
+  --bg-navbar: #EEEADF;       /* Creme ligeiramente mais denso para barras */
+  --txt-primary: #1A2438;     /* Grafite azulado escuro de altíssimo contraste */
+  --txt-secondary: #4A5568;   /* Cinza chumbo escuro super legível */
+  --txt-muted: #718096;       /* Cinza médio para detalhes secundários */
+  --gold-primary: #B58A10;    /* Ouro escuro e firme de alto contraste */
+  --gold-dim: #8E6B08;        /* Ouro ainda mais denso */
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-gold: rgba(181, 138, 16, 0.4);
+  --card-shadow: 0 8px 24px rgba(26, 36, 56, 0.06);
+  --glow-effect: 0 0 15px rgba(181, 138, 16, 0.1);
+  --overlay-bg: rgba(26, 36, 56, 0.3);
+}
+
+/* Estrutura Básica do Corpo */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-main);
+  color: var(--txt-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+/* 2. Remoção de Neblinas e Partículas (Sem Poluição Visual) */
+.misty-bg {
+  display: none !important; /* Totalmente ocultado para evitar dispersão e cansaço visual */
+}
+
+/* 3. Frame de Exibição SPA (Mobile-First de Alta Qualidade) */
+#app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: var(--bg-main);
+  overflow: hidden;
+  transition: background-color var(--transition-fast);
+}
+
+@media (min-width: 769px) {
+  #app-container {
+    max-width: 450px;
+    height: 90vh;
+    border-radius: 36px;
+    border: 10px solid var(--bg-navbar);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 
+                0 0 0 1px var(--border-color);
+  }
+}
+
+/* 4. Transições de Tela SPA */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity var(--transition-premium), transform var(--transition-premium);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--bg-main);
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   TELA 1: BIBLIOTECA (MENU PRINCIPAL)
+   ========================================================================== */
+.library-header {
+  text-align: center;
+  padding: 3rem 1.5rem 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Barra superior da Biblioteca */
+.library-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.brand-badge {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--gold-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Botão de Alternância de Tema (Grande e Estilo Pill) */
+.theme-toggle-btn {
+  background-color: var(--bg-surface);
+  border: 1.8px solid var(--border-gold);
+  color: var(--gold-primary);
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-fast);
+  height: 40px;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--gold-primary);
+  color: var(--bg-main);
+  border-color: transparent;
+}
+
+.library-title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--txt-primary);
+  line-height: 1.2;
+}
+
+.library-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  color: var(--txt-secondary);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Grid da Biblioteca */
+.library-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  max-width: 600px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+}
+
+/* Cartão do Livro Acessível (Plano, Sem 3D Confuso) */
+.book-card {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--btn-radius);
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: border var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: var(--gold-primary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.book-card:hover {
+  border-color: var(--gold-primary);
+  box-shadow: var(--glow-effect), var(--card-shadow);
+  transform: translateY(-2px);
+}
+
+.book-card:hover::before {
+  opacity: 1;
+}
+
+/* Capa Plana e Elegante */
+.book-cover-container {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-cover-3d {
+  width: 170px;
+  height: 240px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--transition-premium), box-shadow var(--transition-premium);
+}
+
+.book-card:hover .book-cover-3d {
+  transform: scale(1.03); /* Zoom simples e confortável, sem rotações tontas */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Detalhes do Livro */
+.book-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.book-category {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-primary);
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.book-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--txt-primary);
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+}
+
+.book-card-desc {
+  font-size: 1.05rem;
+  color: var(--txt-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Progresso de Leitura */
+.book-progress-wrapper {
+  margin-top: auto;
+}
+
+.book-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--txt-secondary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.book-progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: var(--border-color);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.book-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold-primary));
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Botão Acessível Gigante do Card */
+.btn-read-card {
+  width: 100%;
+  height: var(--btn-height-large);
+  background-color: var(--gold-primary);
+  color: var(--bg-main) !important; /* Excelente contraste */
+  border: none;
+  font-family: var(--font-sans);
+  font-size: var(--btn-font-size);
+  font-weight: 800;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--card-shadow);
+}
+
+.book-card:hover .btn-read-card {
+  background-color: var(--gold-dim);
+  box-shadow: var(--glow-effect);
+}
+
+/* Rodapé */
+.library-footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  font-size: 0.9rem;
+  color: var(--txt-secondary);
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  margin-top: auto;
+  background-color: var(--bg-navbar);
+}
+
+/* ==========================================================================
+   TELA 2: INTERFACE DO E-READER (LEITOR DIGITAL)
+   ========================================================================== */
+#reader-screen {
+  background-color: var(--bg-main);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topo do Leitor: Container Principal */
+.reader-header-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-navbar);
+  border-bottom: 2px solid var(--border-color);
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Barra Superior de Leitura (Navegação Sólida e Sem Apertos) */
+.reader-navbar {
+  height: 70px;
+  background-color: var(--bg-navbar);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.2rem;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Botões do Topo (Acessíveis e Espaçosos) */
+.nav-btn {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  color: var(--txt-primary);
+  padding: 0 1rem;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: var(--btn-height-medium);
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-fast);
+}
+
+.nav-btn:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+  background-color: var(--bg-navbar);
+}
+
+.index-btn {
+  height: var(--btn-height-medium);
+  padding: 0 1rem;
+}
+
+.reader-meta {
+  text-align: center;
+  flex: 1;
+  padding: 0 0.5rem;
+  min-width: 0; /* Impede quebras estranhas */
+}
+
+.reader-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--txt-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-chapter-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold-primary);
+  font-weight: 700;
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Barra de Acessibilidade Dedicada (Linha 2 do Header) */
+.reader-accessibility-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--bg-surface);
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.a11y-action-btn {
+  flex: 1;
+  height: 44px;
+  background-color: var(--bg-main);
+  border: 1.5px solid var(--border-color);
+  color: var(--txt-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--card-shadow);
+}
+
+.a11y-action-btn span {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+}
+
+.a11y-action-btn:hover {
+  border-color: var(--gold-primary);
+  background-color: var(--bg-navbar);
+}
+
+.theme-toggle-action {
+  border-color: var(--border-gold);
+}
+
+/* Barra de Progresso Superior */
+.progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background-color: var(--border-color);
+  position: relative;
+  z-index: 99;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold-primary));
+  box-shadow: 0 0 10px rgba(181, 138, 16, 0.4);
+  transition: width 0.3s ease;
+}
+
+/* Área da Viewport de Leitura */
+.reader-viewport {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Botões laterais de navegação (Desktop) */
+.page-nav-side {
+  width: 80px;
+  background: transparent;
+  border: none;
+  color: var(--txt-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.page-nav-side:hover {
+  color: var(--gold-primary);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Área Principal do Texto */
+.reader-content-box {
+  flex: 1;
+  max-width: 680px;
+  padding: 2.2rem 1.2rem 3.5rem;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Formatação e Estilização do Conteúdo de Leitura (Super Acessível) */
+.reader-content-box h3 {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.8rem;
+}
+
+.reader-content-box p {
+  color: var(--txt-primary);
+  text-align: left;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.reader-content-box strong {
+  font-weight: 800;
+  color: var(--gold-primary);
+}
+
+.reader-content-box .ancient-quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  color: var(--txt-secondary);
+  border-left: 4px solid var(--gold-primary);
+  padding-left: 1.8rem;
+  margin: 2.5rem 0;
+  position: relative;
+}
+
+.reader-content-box .prayer-box {
+  background-color: var(--bg-card);
+  border: 1px dashed var(--gold-primary);
+  border-left: 5px solid var(--gold-primary);
+  padding: 1.8rem;
+  border-radius: 8px;
+  margin: 2.5rem 0;
+  font-style: italic;
+  font-family: var(--font-quote);
+  color: var(--txt-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   ESCALAS DE FONTES DINÂMICAS (OTIMIZADAS PARA IDOSOS)
+   -------------------------------------------------------------------------- */
+/* Pequena (Ainda legível) */
+.font-size-sm .reader-content-box p { font-size: 1.1rem; line-height: 1.8; }
+.font-size-sm .reader-content-box .ancient-quote { font-size: 1.2rem; }
+.font-size-sm .reader-content-box .prayer-box { font-size: 1.2rem; }
+
+/* Média (Padrão Altamente Confortável) */
+.font-size-md .reader-content-box p { font-size: 1.35rem; line-height: 1.95; }
+.font-size-md .reader-content-box .ancient-quote { font-size: 1.45rem; }
+.font-size-md .reader-content-box .prayer-box { font-size: 1.45rem; }
+
+/* Grande */
+.font-size-lg .reader-content-box p { font-size: 1.6rem; line-height: 2.0; }
+.font-size-lg .reader-content-box .ancient-quote { font-size: 1.7rem; }
+.font-size-lg .reader-content-box .prayer-box { font-size: 1.7rem; }
+
+/* Extra Grande */
+.font-size-xl .reader-content-box p { font-size: 1.85rem; line-height: 2.05; }
+.font-size-xl .reader-content-box .ancient-quote { font-size: 1.95rem; }
+.font-size-xl .reader-content-box .prayer-box { font-size: 1.95rem; }
+
+/* Ultra Grande (XXL - Máxima Legibilidade) */
+.font-size-xxl .reader-content-box p { font-size: 2.15rem; line-height: 2.15; }
+.font-size-xxl .reader-content-box .ancient-quote { font-size: 2.25rem; }
+.font-size-xxl .reader-content-box .prayer-box { font-size: 2.25rem; }
+
+
+/* Barra de Navegação Inferior (Geral/Mobile) */
+.reader-pagination-bar {
+  height: 76px;
+  background-color: var(--bg-navbar);
+  border-top: 1.5px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.2rem;
+  z-index: 100;
+  gap: 0.5rem;
+}
+
+.pagination-btn {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  color: var(--txt-primary);
+  padding: 0 1.2rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: var(--btn-height-medium);
+  transition: all var(--transition-fast);
+  box-shadow: var(--card-shadow);
+  min-width: 115px; /* Evita encolhimento e sobreposição de texto */
+  justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-counter {
+  font-size: 1.05rem;
+  color: var(--txt-secondary);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   SUMÁRIO LATERAL DESLIZANTE (SIDEBAR INDEX)
+   ========================================================================== */
+.reader-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background-color: var(--bg-surface);
+  border-left: 1.5px solid var(--border-color);
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  transform: translateX(100%);
+  transition: transform var(--transition-premium);
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  height: 80px;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid var(--border-color);
+  background-color: var(--bg-navbar);
+}
+
+.sidebar-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+}
+
+.close-btn {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  color: var(--txt-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  transition: color var(--transition-fast);
+}
+
+.close-btn:hover {
+  color: var(--gold-primary);
+  border-color: var(--gold-primary);
+}
+
+.chapters-list {
+  list-style: none;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.chapter-item {
+  padding: 1.2rem;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: 0.8rem;
+  background-color: var(--bg-main);
+}
+
+.chapter-item-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--txt-primary);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.chapter-item-progress {
+  font-size: 0.95rem;
+  color: var(--txt-secondary);
+}
+
+.chapter-item:hover {
+  border-color: var(--gold-primary);
+}
+
+.chapter-item.active {
+  background-color: var(--bg-navbar);
+  border-color: var(--gold-primary);
+}
+
+.chapter-item.active .chapter-item-title {
+  color: var(--gold-primary);
+}
+
+/* Overlay do Sidebar */
+.sidebar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-bg);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-premium);
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE E ADAPTAÇÕES DE DISPOSITIVOS MÓVEIS
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Menu Principal */
+  .library-header {
+    padding: 2.2rem 1.2rem 1.2rem;
+  }
+  
+  .library-title {
+    font-size: 2.10rem;
+  }
+  
+  .library-subtitle {
+    font-size: 1rem;
+  }
+  
+  .library-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    padding: 0 1rem;
+  }
+  
+  /* E-Reader View Mobile Otimizado */
+  .reader-header-container {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .reader-navbar {
+    padding: 0 0.8rem;
+    height: 64px;
+  }
+
+  .nav-btn {
+    padding: 0 0.7rem;
+    font-size: 0.95rem;
+    gap: 0.3rem;
+  }
+
+  .index-btn {
+    padding: 0 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .reader-meta {
+    padding: 0 0.3rem;
+  }
+
+  .reader-title {
+    font-size: 1.02rem;
+  }
+
+  .reader-chapter-label {
+    font-size: 0.75rem;
+  }
+
+  /* Barra de acessibilidade adaptada para telas estreitas de celular */
+  .reader-accessibility-bar {
+    padding: 0.5rem 0.6rem;
+    gap: 0.4rem;
+  }
+  
+  .a11y-action-btn {
+    font-size: 0.8rem;
+    height: 44px;
+    gap: 0.3rem;
+    padding: 0 0.4rem;
+  }
+
+  .a11y-action-btn span {
+    font-size: 1rem;
+  }
+
+  /* Oculta setas laterais no mobile */
+  .page-nav-side {
+    display: none !important;
+  }
+
+  /* Máximo aproveitamento de tela no mobile: margens super finas */
+  .reader-content-box {
+    padding: 1.5rem 0.8rem 2.5rem;
+  }
+
+  .reader-content-box h3 {
+    font-size: 1.55rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .reader-pagination-bar {
+    padding: 0 0.8rem;
+    height: 72px;
+    gap: 0.4rem;
+  }
+
+  .reader-sidebar {
+    width: 85%;
+  }
+  
+  .pagination-btn {
+    padding: 0 0.8rem;
+    font-size: 0.95rem;
+    min-width: 105px;
+  }
+
+  .page-counter {
+    font-size: 0.95rem;
+  }
+}
+
+/* Otimizações de Efeitos e Redução de Movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* ==========================================================================
+   ESTILOS PREMIUM PARA OS ESBOÇOS DE JOSUÉ
+   ========================================================================== */
+.outline-card {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.2rem 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: border var(--transition-fast), padding var(--transition-normal), box-shadow var(--transition-normal);
+  cursor: pointer;
+}
+
+.outline-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: 0 6px 16px rgba(181, 138, 16, 0.08);
+}
+
+.outline-card.expanded {
+  padding: 1.8rem;
+  border-color: var(--gold-primary);
+  box-shadow: 0 8px 24px rgba(181, 138, 16, 0.12);
+  cursor: default;
+}
+
+.outline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.outline-header-text {
+  flex: 1;
+}
+
+.outline-card .outline-header-border {
+  height: 1px;
+  background-color: transparent;
+  margin-top: 0.8rem;
+  transition: background-color var(--transition-normal);
+}
+
+.outline-card.expanded .outline-header-border {
+  background-color: var(--border-color);
+}
+
+.accordion-icon {
+  font-size: 0.95rem;
+  color: var(--gold-primary);
+  transition: transform var(--transition-normal), background-color var(--transition-normal), color var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(181, 138, 16, 0.05);
+  border-radius: 50%;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+
+.outline-card:hover .accordion-icon {
+  border-color: var(--border-gold);
+  background-color: rgba(181, 138, 16, 0.1);
+}
+
+.outline-card.expanded .accordion-icon {
+  transform: rotate(180deg);
+  background-color: var(--gold-primary);
+  color: var(--bg-surface);
+}
+
+.outline-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out, margin-top 0.4s ease-out;
+}
+
+.outline-card.expanded .outline-content {
+  max-height: 3500px;
+  opacity: 1;
+  margin-top: 1.2rem;
+  overflow: visible;
+}
+
+.outline-number {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-primary);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.outline-title {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--txt-primary);
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+}
+
+.outline-ref {
+  font-family: var(--font-quote);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--txt-secondary);
+}
+
+.scripture-box {
+  background-color: rgba(245, 197, 66, 0.05) !important;
+  border-left: 4px solid var(--gold-primary) !important;
+  padding: 1rem 1.2rem !important;
+  margin: 1.2rem 0 !important;
+  font-family: var(--font-quote);
+  font-size: 1.15rem;
+}
+
+body.theme-light .scripture-box {
+  background-color: rgba(181, 138, 16, 0.06) !important;
+}
+
+.outline-points {
+  margin: 1.5rem 0;
+}
+
+.outline-points h5 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.8rem;
+}
+
+.outline-points ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.outline-points li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.outline-points li::before {
+  content: "♦";
+  position: absolute;
+  left: 0;
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+}
+
+.study-box {
+  background-color: var(--bg-main) !important;
+  border: 1px solid var(--border-gold) !important;
+  border-left: 5px solid var(--gold-primary) !important;
+  border-radius: 8px;
+  padding: 1.5rem !important;
+  margin-top: 1.5rem !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.study-section {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.study-section:last-child {
+  margin-bottom: 0;
+}
+
+.study-section strong {
+  color: var(--gold-primary);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.study-divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 1rem 0;
+}
+
+/* Ajustes de acessibilidade de fontes para o outline */
+.font-size-sm .outline-title { font-size: 1.35rem; }
+.font-size-sm .outline-points li { font-size: 1rem; }
+.font-size-sm .study-section { font-size: 0.95rem; }
+
+.font-size-md .outline-title { font-size: 1.55rem; }
+.font-size-md .outline-points li { font-size: 1.15rem; }
+.font-size-md .study-section { font-size: 1.1rem; }
+
+.font-size-lg .outline-title { font-size: 1.8rem; }
+.font-size-lg .outline-points li { font-size: 1.35rem; }
+.font-size-lg .study-section { font-size: 1.3rem; }
+
+.font-size-xl .outline-title { font-size: 2.1rem; }
+.font-size-xl .outline-points li { font-size: 1.6rem; }
+.font-size-xl .study-section { font-size: 1.5rem; }
+
+.font-size-xxl .outline-title { font-size: 2.4rem; }
+.font-size-xxl .outline-points li { font-size: 1.85rem; }
+.font-size-xxl .study-section { font-size: 1.75rem; }

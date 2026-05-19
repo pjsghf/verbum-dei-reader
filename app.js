@@ -12,7 +12,9 @@ const state = {
   currentPageIndex: 0,
   fontSizeClass: "font-size-md", // sm, md, lg, xl, xxl
   theme: "light", // light, dark
-  progressData: {} // Estrutura: { "livro-id": { chapterIndex: X, pageIndex: Y, percent: Z } }
+  progressData: {}, // Estrutura: { "livro-id": { chapterIndex: X, pageIndex: Y, percent: Z } }
+  bookmarksData: {}, // Estrutura: { "bookId-chapIndex-pageIndex": { bookId, chapterIndex, pageIndex, bookTitle, chapTitle } }
+  notesData: {} // Estrutura: { "bookId-chapIndex-pageIndex": { text, bookId, chapterIndex, pageIndex, bookTitle, chapTitle, updatedAt } }
 };
 
 // 2. Inicialização ao Carregar a Página
@@ -42,6 +44,26 @@ function initLocalStorage() {
     }
   }
   
+  const savedBookmarks = localStorage.getItem("verbum_dei_reader_bookmarks");
+  if (savedBookmarks) {
+    try {
+      state.bookmarksData = JSON.parse(savedBookmarks);
+    } catch (e) {
+      console.error("Erro ao analisar favoritos salvos:", e);
+      state.bookmarksData = {};
+    }
+  }
+  
+  const savedNotes = localStorage.getItem("verbum_dei_reader_notes");
+  if (savedNotes) {
+    try {
+      state.notesData = JSON.parse(savedNotes);
+    } catch (e) {
+      console.error("Erro ao analisar anotações salvas:", e);
+      state.notesData = {};
+    }
+  }
+  
   const savedFontSize = localStorage.getItem("verbum_dei_reader_font_size");
   if (savedFontSize) {
     state.fontSizeClass = savedFontSize;
@@ -62,7 +84,7 @@ function applyTheme() {
   document.body.classList.add(state.theme === "light" ? "theme-light" : "theme-dark");
   
   // Atualizar elementos e textos de controle de tema
-  const libThemeBtn = document.getElementById("theme-toggle-library");
+  const libThemeBtn = document.getElementById("btn-theme-toggle-library");
   const readerToggle = document.getElementById("btn-theme-toggle");
   
   if (state.theme === "light") {
@@ -139,6 +161,9 @@ function calculateBookProgressPercentage(bookId, chapterIndex, pageIndex) {
 
 // 5. Renderizar Cartões de Livros na Biblioteca
 function renderLibrary() {
+  // Atualiza as estatísticas no painel antes de renderizar
+  updateLibraryStats();
+  
   const grid = document.getElementById("books-grid");
   grid.innerHTML = ""; // Limpa grid existente
   
@@ -303,6 +328,10 @@ function renderCurrentPage() {
   // 6. Atualizar item ativo no sumário
   updateSidebarActiveItem();
   
+  // 6.1. Atualizar favoritos e notas no leitor
+  updateBookmarkUI();
+  updateNoteUI();
+  
   // 7. Salvar progresso no armazenamento
   saveProgressToStorage(book.id, state.currentChapterIndex, state.currentPageIndex);
 }
@@ -429,7 +458,7 @@ function setupEventListeners() {
   document.getElementById("btn-back-to-library").addEventListener("click", closeBook);
   
   // Alternância de Tema Claro/Escuro
-  const libThemeBtn = document.getElementById("theme-toggle-library");
+  const libThemeBtn = document.getElementById("btn-theme-toggle-library");
   if (libThemeBtn) {
     libThemeBtn.addEventListener("click", toggleTheme);
   }
@@ -437,6 +466,49 @@ function setupEventListeners() {
   const readerThemeBtn = document.getElementById("btn-theme-toggle");
   if (readerThemeBtn) {
     readerThemeBtn.addEventListener("click", toggleTheme);
+  }
+  
+  // Favoritos
+  const toggleBookmarkBtn = document.getElementById("btn-toggle-bookmark");
+  if (toggleBookmarkBtn) {
+    toggleBookmarkBtn.addEventListener("click", toggleBookmark);
+  }
+  
+  // Anotações
+  const addNoteBtn = document.getElementById("btn-add-note");
+  if (addNoteBtn) {
+    addNoteBtn.addEventListener("click", openNoteModal);
+  }
+  
+  const closeNoteModalBtn = document.getElementById("btn-close-note-modal");
+  if (closeNoteModalBtn) {
+    closeNoteModalBtn.addEventListener("click", closeNoteModal);
+  }
+  
+  const noteModalOverlay = document.getElementById("note-modal-overlay");
+  if (noteModalOverlay) {
+    noteModalOverlay.addEventListener("click", closeNoteModal);
+  }
+  
+  const deleteNoteBtn = document.getElementById("btn-delete-note");
+  if (deleteNoteBtn) {
+    deleteNoteBtn.addEventListener("click", deleteNote);
+  }
+  
+  const saveNoteBtn = document.getElementById("btn-save-note");
+  if (saveNoteBtn) {
+    saveNoteBtn.addEventListener("click", saveNote);
+  }
+  
+  // Abas do Sumário
+  const tabChapters = document.getElementById("tab-chapters");
+  if (tabChapters) {
+    tabChapters.addEventListener("click", () => switchSidebarTab("chapters"));
+  }
+  
+  const tabSaved = document.getElementById("tab-saved");
+  if (tabSaved) {
+    tabSaved.addEventListener("click", () => switchSidebarTab("saved"));
   }
   
   // Paginação de Páginas
@@ -523,4 +595,414 @@ function setupEventListeners() {
       card.classList.add("expanded");
     }
   });
+}
+
+// ==========================================================================
+// 12. Lógica das Estatísticas da Biblioteca
+// ==========================================================================
+function updateLibraryStats() {
+  const totalBooks = BOOKS_DATABASE.length;
+  let totalProgress = 0;
+  let completedCount = 0;
+  
+  BOOKS_DATABASE.forEach(book => {
+    const saved = state.progressData[book.id];
+    if (saved) {
+      totalProgress += saved.percent || 0;
+      if (saved.percent === 100) {
+        completedCount++;
+      }
+    }
+  });
+  
+  const avgProgress = totalBooks > 0 ? Math.round(totalProgress / totalBooks) : 0;
+  const bookmarksCount = Object.keys(state.bookmarksData).length;
+  const notesCount = Object.keys(state.notesData).length;
+  
+  const progressEl = document.getElementById("stat-total-progress");
+  if (progressEl) progressEl.textContent = `${avgProgress}%`;
+  
+  const completedEl = document.getElementById("stat-books-completed");
+  if (completedEl) completedEl.textContent = `${completedCount}/${totalBooks}`;
+  
+  const bookmarksEl = document.getElementById("stat-bookmarks-count");
+  if (bookmarksEl) bookmarksEl.textContent = bookmarksCount;
+  
+  const notesEl = document.getElementById("stat-notes-count");
+  if (notesEl) notesEl.textContent = notesCount;
+}
+
+// ==========================================================================
+// 13. Helpers e Lógica de Favoritos (Bookmarks)
+// ==========================================================================
+function getPageKey(bookId, chapIndex, pageIndex) {
+  return `${bookId}-${chapIndex}-${pageIndex}`;
+}
+
+function toggleBookmark() {
+  if (!state.currentBook) return;
+  
+  const bookId = state.currentBook.id;
+  const chapIndex = state.currentChapterIndex;
+  const pageIndex = state.currentPageIndex;
+  const key = getPageKey(bookId, chapIndex, pageIndex);
+  
+  if (state.bookmarksData[key]) {
+    delete state.bookmarksData[key];
+  } else {
+    const bookTitle = state.currentBook.title;
+    const chapTitle = state.currentBook.chapters[chapIndex].title;
+    state.bookmarksData[key] = {
+      bookId,
+      chapterIndex: chapIndex,
+      pageIndex,
+      bookTitle,
+      chapTitle
+    };
+  }
+  
+  localStorage.setItem("verbum_dei_reader_bookmarks", JSON.stringify(state.bookmarksData));
+  
+  updateBookmarkUI();
+  renderBookmarksList();
+  updateLibraryStats();
+}
+
+function updateBookmarkUI() {
+  if (!state.currentBook) return;
+  
+  const key = getPageKey(state.currentBook.id, state.currentChapterIndex, state.currentPageIndex);
+  const isBookmarked = !!state.bookmarksData[key];
+  
+  const icon = document.getElementById("bookmark-status-icon");
+  const text = document.getElementById("bookmark-status-text");
+  const btn = document.getElementById("btn-toggle-bookmark");
+  
+  if (icon) {
+    icon.textContent = isBookmarked ? "★" : "☆";
+  }
+  if (text) {
+    text.textContent = isBookmarked ? "Favoritada" : "Favoritar Página";
+  }
+  if (btn) {
+    if (isBookmarked) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  }
+}
+
+function renderBookmarksList() {
+  const list = document.getElementById("bookmarks-list");
+  if (!list) return;
+  
+  list.innerHTML = "";
+  
+  if (!state.currentBook) return;
+  const bookId = state.currentBook.id;
+  
+  const bookmarkedKeys = Object.keys(state.bookmarksData).filter(key => key.startsWith(`${bookId}-`));
+  
+  if (bookmarkedKeys.length === 0) {
+    list.innerHTML = `<li class="saved-empty-msg">Nenhum favorito salvo nesta leitura.</li>`;
+    return;
+  }
+  
+  bookmarkedKeys.sort((a, b) => {
+    const partA = a.split("-");
+    const partB = b.split("-");
+    const chapA = parseInt(partA[1], 10);
+    const chapB = parseInt(partB[1], 10);
+    if (chapA !== chapB) return chapA - chapB;
+    const pageA = parseInt(partA[2], 10);
+    const pageB = parseInt(partB[2], 10);
+    return pageA - pageB;
+  });
+  
+  bookmarkedKeys.forEach(key => {
+    const fav = state.bookmarksData[key];
+    const item = document.createElement("li");
+    item.className = "saved-item";
+    
+    item.innerHTML = `
+      <div class="saved-item-info">
+        <div class="saved-item-title">${fav.chapTitle}</div>
+        <div class="saved-item-meta">Pág. ${fav.pageIndex + 1}</div>
+      </div>
+      <button class="saved-item-delete-btn" aria-label="Remover favorito" data-key="${key}">×</button>
+    `;
+    
+    item.querySelector(".saved-item-info").addEventListener("click", () => {
+      state.currentChapterIndex = fav.chapterIndex;
+      state.currentPageIndex = fav.pageIndex;
+      renderCurrentPage();
+      closeSidebar();
+    });
+    
+    item.querySelector(".saved-item-delete-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      delete state.bookmarksData[key];
+      localStorage.setItem("verbum_dei_reader_bookmarks", JSON.stringify(state.bookmarksData));
+      updateBookmarkUI();
+      renderBookmarksList();
+      updateLibraryStats();
+    });
+    
+    list.appendChild(item);
+  });
+}
+
+// ==========================================================================
+// 14. Lógica de Anotações com Auto-Salvamento (Opção A)
+// ==========================================================================
+function openNoteModal() {
+  if (!state.currentBook) return;
+  
+  const bookId = state.currentBook.id;
+  const chapIndex = state.currentChapterIndex;
+  const pageIndex = state.currentPageIndex;
+  const key = getPageKey(bookId, chapIndex, pageIndex);
+  
+  const modal = document.getElementById("note-modal");
+  const textarea = document.getElementById("note-textarea");
+  const deleteBtn = document.getElementById("btn-delete-note");
+  
+  if (modal) {
+    modal.classList.add("open");
+  }
+  
+  if (state.notesData[key]) {
+    if (textarea) textarea.value = state.notesData[key].text;
+    if (deleteBtn) deleteBtn.style.display = "block";
+  } else {
+    if (textarea) textarea.value = "";
+    if (deleteBtn) deleteBtn.style.display = "none";
+  }
+  
+  if (textarea) {
+    textarea.focus();
+  }
+}
+
+function closeNoteModal() {
+  const modal = document.getElementById("note-modal");
+  if (!modal || !modal.classList.contains("open")) return;
+  
+  // Opção A: Auto-salvar alterações ao fechar pelo overlay ou botão X
+  if (state.currentBook) {
+    const bookId = state.currentBook.id;
+    const chapIndex = state.currentChapterIndex;
+    const pageIndex = state.currentPageIndex;
+    const key = getPageKey(bookId, chapIndex, pageIndex);
+    
+    const textarea = document.getElementById("note-textarea");
+    const currentText = textarea ? textarea.value.trim() : "";
+    const savedNote = state.notesData[key];
+    const savedText = savedNote ? savedNote.text.trim() : "";
+    
+    if (currentText !== savedText) {
+      if (currentText === "") {
+        if (savedNote) {
+          delete state.notesData[key];
+          localStorage.setItem("verbum_dei_reader_notes", JSON.stringify(state.notesData));
+        }
+      } else {
+        const bookTitle = state.currentBook.title;
+        const chapTitle = state.currentBook.chapters[chapIndex].title;
+        state.notesData[key] = {
+          text: currentText,
+          bookId,
+          chapterIndex: chapIndex,
+          pageIndex,
+          bookTitle,
+          chapTitle,
+          updatedAt: new Date().toISOString()
+        };
+        localStorage.setItem("verbum_dei_reader_notes", JSON.stringify(state.notesData));
+      }
+      
+      updateNoteUI();
+      renderNotesList();
+      updateLibraryStats();
+    }
+  }
+  
+  modal.classList.remove("open");
+  const textarea = document.getElementById("note-textarea");
+  if (textarea) {
+    textarea.value = "";
+  }
+}
+
+function saveNote() {
+  if (!state.currentBook) return;
+  
+  const bookId = state.currentBook.id;
+  const chapIndex = state.currentChapterIndex;
+  const pageIndex = state.currentPageIndex;
+  const key = getPageKey(bookId, chapIndex, pageIndex);
+  
+  const textarea = document.getElementById("note-textarea");
+  const text = textarea ? textarea.value.trim() : "";
+  
+  if (!text) {
+    deleteNote();
+    return;
+  }
+  
+  const bookTitle = state.currentBook.title;
+  const chapTitle = state.currentBook.chapters[chapIndex].title;
+  
+  state.notesData[key] = {
+    text,
+    bookId,
+    chapterIndex: chapIndex,
+    pageIndex,
+    bookTitle,
+    chapTitle,
+    updatedAt: new Date().toISOString()
+  };
+  
+  localStorage.setItem("verbum_dei_reader_notes", JSON.stringify(state.notesData));
+  
+  // Limpar campo temporariamente para evitar duplo salvamento no encerramento do modal
+  if (textarea) textarea.value = text;
+  
+  closeNoteModal();
+  updateNoteUI();
+  renderNotesList();
+  updateLibraryStats();
+}
+
+function deleteNote() {
+  if (!state.currentBook) return;
+  
+  const bookId = state.currentBook.id;
+  const chapIndex = state.currentChapterIndex;
+  const pageIndex = state.currentPageIndex;
+  const key = getPageKey(bookId, chapIndex, pageIndex);
+  
+  if (state.notesData[key]) {
+    delete state.notesData[key];
+    localStorage.setItem("verbum_dei_reader_notes", JSON.stringify(state.notesData));
+  }
+  
+  // Limpar campo para evitar re-salvar no fechamento automático
+  const textarea = document.getElementById("note-textarea");
+  if (textarea) textarea.value = "";
+  
+  closeNoteModal();
+  updateNoteUI();
+  renderNotesList();
+  updateLibraryStats();
+}
+
+function updateNoteUI() {
+  if (!state.currentBook) return;
+  
+  const key = getPageKey(state.currentBook.id, state.currentChapterIndex, state.currentPageIndex);
+  const hasNote = !!state.notesData[key];
+  
+  const btn = document.getElementById("btn-add-note");
+  const textSpan = btn ? btn.querySelector(".note-text") : null;
+  
+  if (btn) {
+    if (hasNote) {
+      btn.classList.add("active");
+      if (textSpan) textSpan.textContent = "Editar Nota";
+    } else {
+      btn.classList.remove("active");
+      if (textSpan) textSpan.textContent = "Anotação";
+    }
+  }
+}
+
+function renderNotesList() {
+  const list = document.getElementById("notes-list");
+  if (!list) return;
+  
+  list.innerHTML = "";
+  
+  if (!state.currentBook) return;
+  const bookId = state.currentBook.id;
+  
+  const noteKeys = Object.keys(state.notesData).filter(key => key.startsWith(`${bookId}-`));
+  
+  if (noteKeys.length === 0) {
+    list.innerHTML = `<li class="saved-empty-msg">Nenhuma anotação feita nesta leitura.</li>`;
+    return;
+  }
+  
+  noteKeys.sort((a, b) => {
+    const partA = a.split("-");
+    const partB = b.split("-");
+    const chapA = parseInt(partA[1], 10);
+    const chapB = parseInt(partB[1], 10);
+    if (chapA !== chapB) return chapA - chapB;
+    const pageA = parseInt(partA[2], 10);
+    const pageB = parseInt(partB[2], 10);
+    return pageA - pageB;
+  });
+  
+  noteKeys.forEach(key => {
+    const note = state.notesData[key];
+    const item = document.createElement("li");
+    item.className = "saved-item note-item";
+    
+    item.innerHTML = `
+      <div class="saved-item-info">
+        <div class="saved-item-title">${note.chapTitle}</div>
+        <div class="saved-item-meta">Pág. ${note.pageIndex + 1}</div>
+        <div class="saved-item-snippet">${note.text}</div>
+      </div>
+      <button class="saved-item-delete-btn" aria-label="Remover anotação" data-key="${key}">×</button>
+    `;
+    
+    item.querySelector(".saved-item-info").addEventListener("click", () => {
+      state.currentChapterIndex = note.chapterIndex;
+      state.currentPageIndex = note.pageIndex;
+      renderCurrentPage();
+      closeSidebar();
+      setTimeout(() => {
+        openNoteModal();
+      }, 100);
+    });
+    
+    item.querySelector(".saved-item-delete-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      delete state.notesData[key];
+      localStorage.setItem("verbum_dei_reader_notes", JSON.stringify(state.notesData));
+      updateNoteUI();
+      renderNotesList();
+      updateLibraryStats();
+    });
+    
+    list.appendChild(item);
+  });
+}
+
+// ==========================================================================
+// 15. Alternância de Abas na Sidebar (Índice vs. Favoritos e Notas)
+// ==========================================================================
+function switchSidebarTab(tabId) {
+  const tabChapters = document.getElementById("tab-chapters");
+  const tabSaved = document.getElementById("tab-saved");
+  const panelChapters = document.getElementById("sidebar-chapters-panel");
+  const panelSaved = document.getElementById("sidebar-saved-panel");
+  
+  if (tabId === "chapters") {
+    if (tabChapters) tabChapters.classList.add("active");
+    if (tabSaved) tabSaved.classList.remove("active");
+    if (panelChapters) panelChapters.classList.add("active");
+    if (panelSaved) panelSaved.classList.remove("active");
+  } else if (tabId === "saved") {
+    if (tabChapters) tabChapters.classList.remove("active");
+    if (tabSaved) tabSaved.classList.add("active");
+    if (panelChapters) panelChapters.classList.remove("active");
+    if (panelSaved) panelSaved.classList.add("active");
+    
+    renderBookmarksList();
+    renderNotesList();
+  }
 }

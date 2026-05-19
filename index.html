@@ -9,6 +9,13 @@
   <meta name="description" content="Acesse os mini-apps e livros digitais sagrados do projeto Verbum Dei em uma experiência de leitura premium e interativa.">
   <meta name="robots" content="index, follow">
   
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Verbum Dei — Leituras Divinas">
+  <meta property="og:description" content="Acesse os mini-apps e livros digitais sagrados do projeto Verbum Dei em uma experiência de leitura premium e interativa.">
+  <meta property="og:url" content="https://verbum-dei-leituras-divinas.vercel.app/">
+  <meta property="og:image" content="https://verbum-dei-leituras-divinas.vercel.app/assets/cover-fallback.jpg">
+  <meta property="og:type" content="website">
+  
   <!-- Google Fonts: Cinzel for headers, Inter for UI/Body, Georgia for quotes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,6 +49,29 @@
         <h1 class="library-title">Leituras Divinas</h1>
         <p class="library-subtitle">Escolha uma leitura divina abaixo para iniciar sua leitura simples, confortável e ampliada.</p>
       </header>
+
+      <!-- Central de Estatísticas Premium -->
+      <section class="stats-dashboard" id="stats-dashboard" aria-label="Painel de Progresso">
+        <h2 class="stats-title">Seu Progresso Espiritual</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-total-progress">0%</span>
+            <span class="stat-label">Progresso Médio</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-books-completed">0/6</span>
+            <span class="stat-label">Livros Concluídos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-bookmarks-count">0</span>
+            <span class="stat-label">Favoritos Salvos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-notes-count">0</span>
+            <span class="stat-label">Anotações</span>
+          </div>
+        </div>
+      </section>
 
       <!-- Grid de Livros (Sera preenchido dinamicamente pelo JS) -->
       <section class="library-grid" id="books-grid">
@@ -101,6 +131,19 @@
             <span>A+</span> Letra Maior
           </button>
         </div>
+
+        <!-- Linha 3: Barra de Recursos Interativos (Favoritos e Anotações) -->
+        <div class="reader-features-bar">
+          <button id="btn-toggle-bookmark" class="feature-action-btn" aria-label="Marcar como favorito esta página">
+            <span id="bookmark-status-icon" class="bookmark-icon">☆</span>
+            <span id="bookmark-status-text" class="bookmark-text">Favoritar Página</span>
+          </button>
+          
+          <button id="btn-add-note" class="feature-action-btn" aria-label="Adicionar anotação a esta página">
+            <span class="note-icon">✍️</span>
+            <span class="note-text">Anotação</span>
+          </button>
+        </div>
       </header>
 
       <!-- Barra de Progresso Superior Integrada (Dourada Metálica) -->
@@ -149,10 +192,11 @@
         </button>
       </footer>
 
-      <!-- Sumário Lateral Deslizante (Capítulos) -->
+      <!-- Sumário Lateral Deslizante (Abas: Índice vs. Favoritos/Notas) -->
       <aside id="reader-sidebar" class="reader-sidebar">
-        <div class="sidebar-header">
-          <h3 class="sidebar-title">Índice</h3>
+        <div class="sidebar-header-tabs">
+          <button id="tab-chapters" class="sidebar-tab active" aria-controls="sidebar-chapters-panel">Índice</button>
+          <button id="tab-saved" class="sidebar-tab" aria-controls="sidebar-saved-panel">Favoritos & Notas</button>
           <button id="btn-close-sidebar" class="close-btn" aria-label="Fechar sumário">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -160,12 +204,53 @@
             </svg>
           </button>
         </div>
-        <ul id="sidebar-chapters-list" class="chapters-list">
-          <!-- Capítulos gerados dinamicamente via JS -->
-        </ul>
+
+        <!-- Painel 1: Lista de Capítulos -->
+        <div id="sidebar-chapters-panel" class="sidebar-panel active">
+          <ul id="sidebar-chapters-list" class="chapters-list">
+            <!-- Capítulos gerados dinamicamente via JS -->
+          </ul>
+        </div>
+
+        <!-- Painel 2: Lista de Favoritos e Anotações -->
+        <div id="sidebar-saved-panel" class="sidebar-panel">
+          <div class="saved-items-container">
+            <div class="saved-section">
+              <h4 class="saved-section-title">Páginas Favoritas</h4>
+              <ul id="bookmarks-list" class="saved-list">
+                <li class="saved-empty-msg">Nenhum favorito salvo nesta leitura.</li>
+              </ul>
+            </div>
+            <div class="saved-section">
+              <h4 class="saved-section-title">Suas Anotações</h4>
+              <ul id="notes-list" class="saved-list">
+                <li class="saved-empty-msg">Nenhuma anotação feita nesta leitura.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </aside>
       <!-- Overlay para fechar sidebar clicando fora -->
       <div id="reader-sidebar-overlay" class="sidebar-overlay"></div>
+
+      <!-- Modal de Anotações Premium -->
+      <div id="note-modal" class="modal-container">
+        <div class="modal-content">
+          <header class="modal-header">
+            <h3 class="modal-title">Anotação Espiritual</h3>
+            <button id="btn-close-note-modal" class="modal-close-btn" aria-label="Fechar anotação">×</button>
+          </header>
+          <div class="modal-body">
+            <label id="note-modal-subtitle" class="modal-subtitle" for="note-textarea">Escreva sua reflexão, aprendizado ou oração para esta página.</label>
+            <textarea id="note-textarea" class="modal-textarea" placeholder="Registre aqui o seu aprendizado, oração ou reflexão sobre esta página..." maxlength="1500"></textarea>
+          </div>
+          <footer class="modal-footer">
+            <button id="btn-delete-note" class="modal-btn delete-btn">Excluir</button>
+            <button id="btn-save-note" class="modal-btn save-btn">Salvar Anotação</button>
+          </footer>
+        </div>
+        <div id="note-modal-overlay" class="modal-overlay"></div>
+      </div>
     </article>
 
   </div>

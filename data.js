@@ -1926,11 +1926,38 @@ Oração: "Deus Todo-Poderoso, aumente minha fé para pedir grandes coisas a voc
   "Ensino Bíblico:Os cinco reis amorreus se escondem em uma caverna, mas são encontrados e humilhados publicamente. Josué ordena que seus capitães coloquem os pés no pescoço desses reis, simbolizando a vitória total e o cumprimento das promessas divinas. Este ato simbólico demonstrou o cumprimento de Deuteronômio 33:29. Aplicação Prática: Deus nos dá autoridade sobre nossos inimigos espirituais. Não devemos temer as forças que se opõem à vontade de Deus em nossas vidas.Oração:
  "Senhor, dá-me a coragem de Josué para enfrentar minhas batalhas com a certeza de que já decretaste a vitória. Amém." — Josué 10:16-28
 </blockquote>`,
-          `<h3>Esboço 53: “A Conquista do Sul”</h3>
-<blockquote class="ancient-quote">
-  "úƖŉtǔrƖġ SƖstŝǂĢtƖŉġJosué conquista cidade após cidade em uma campanha militar organizada e eficaz.OŃŝőƖŝǇŉƖġ TǔtġƷ"Como o Senhor ordenara a Moisés, seu servo, assim Moisés ordenou a Josué; e assim Josué o fez, sem tirar uma palavra de tudo o que o Senhor ordenara a Moisés." (10:40)
-Cġǂpġǒġ ÚǇƖŉġToda a região sul foi conquistada “de uma vez” (10:42), mostrando a rapidez e eficácia da ação divina. OrġŉƖǕǇ: "Deus, ajude-me a ser sistemático e completo em minha obediência, não deixando nenhuma área de minha vida sem rendição. Amém." — Josué 10:29-43
-</blockquote>`,
+          `<div class="outline-card">
+  <div class="outline-header">
+    <div class="outline-header-text">
+      <span class="outline-number">Esboço 53</span>
+      <h4 class="outline-title">A Conquista do Sul</h4>
+      <span class="outline-ref">Josué 10:29-43</span>
+    </div>
+    <div class="accordion-icon">▼</div>
+  </div>
+  <div class="outline-header-border"></div>
+  <div class="outline-content">
+    <div class="scripture-box">
+      "Como o Senhor ordenara a Moisés, seu servo, assim Moisés ordenou a Josué; e assim Josué o fez, sem tirar uma palavra de tudo o que o Senhor ordenara a Moisés." (10:40)
+    </div>
+    <div class="outline-points">
+      <h5>Pontos Principais</h5>
+      <ul>
+        <li><strong>Vitória Sistemática:</strong> Josué conquista cidade após cidade em uma campanha militar organizada e eficaz.</li>
+        <li><strong>Obediência Total:</strong> Obediência irrestrita aos mandamentos estabelecidos pelo Senhor.</li>
+        <li><strong>Campanha Única:</strong> Toda a região sul foi conquistada "de uma vez" (10:42), revelando a agilidade e eficácia do agir divino.</li>
+      </ul>
+    </div>
+    <div class="study-box">
+      <div class="study-section">
+        <strong>Aplicação Prática:</strong> A conquista do sul nos ensina que a obediência deve ser diligente e sistemática. Não devemos poupar esforços ou deixar áreas inacabadas em nossa caminhada espiritual com Deus.
+      </div>
+      <div class="study-section">
+        <strong>Oração:</strong> Deus, ajude-me a ser sistemático e completo em minha obediência, não deixando nenhuma área de minha vida sem rendição. Amém.
+      </div>
+    </div>
+  </div>
+</div>`,
           `<h3>Esboço 54: “A Coalizão do Norte”</h3>
 <blockquote class="ancient-quote">
   "Ensino Bíblico:Os reis do norte, liderados por Jabim de Hazor, formam uma poderosa coalizão militar contra Israel. Apesar dos seus carros e cavalos, Deus entrega esta força formidável nas mãos de Israel, cumprindo a sua promessa.
@@ -2134,10 +2161,38 @@ Aplicação Prática: A verdadeira fraternidade espiritual envolve compromisso c
  Devemos comunicar claramente as nossas intenções para evitar mal-entendidos, especialmente em questões de fé. Ao mesmo tempo, devemos verificar os fatos antes de julgar as ações dos nossos irmãos.Oração:
  "Senhor, dê-me sabedoria para comunicar claramente minha fé e paciência para compreender as ações dos outros antes de julgá-los. Ajude-me a construir pontes de unidade em seu povo. Amém." — Josué 22:9-34
 </blockquote>`,
-          `<h3>Bǔsquŝƪǔ 85: "Lġ ÚƷtƖǂġ ExƋǔrtġŉƖǕǇ őŝ JǔsuŞ"JǔsuŞ 23:1-16
-Lembrete do Passado “O Senhor vosso Deus... lutou por vós” (23:3). Josué lembra-se das vitórias divinas como base para obediência futura. Advertência para o Presente “Não se juntem a estas nações” (23:7). Apela para manter a separação espiritual e a pureza na adoração.
-Promessas e Ameaças Futuras “Assim como toda boa palavra veio sobre você... o Senhor trará sobre você toda palavra má” (23:15). As consequências são tão certas quanto as bênçãos. Aplicação Prática: A liderança espiritual madura combina a lembrança da graça passada com advertências claras sobre as consequências do pecado. Devemos valorizar tanto a bondade quanto a severidade de Deus.Oração:
- "Pai, obrigado por suas promessas fiéis e advertências claras. Ajude-me a manter um equilíbrio entre a celebração de sua graça e o respeito por seus julgamentos. Amém."</h3>`,
+          `<div class="outline-card">
+  <div class="outline-header">
+    <div class="outline-header-text">
+      <span class="outline-number">Esboço 85</span>
+      <h4 class="outline-title">A Última Exortação de Josué</h4>
+      <span class="outline-ref">Josué 23:1-16</span>
+    </div>
+    <div class="accordion-icon">▼</div>
+  </div>
+  <div class="outline-header-border"></div>
+  <div class="outline-content">
+    <div class="scripture-box">
+      "Esforcem-se muito para guardar e praticar tudo o que está escrito no Livro da Lei de Moisés, sem se desviar, nem para a direita nem para a esquerda." (23:6)
+    </div>
+    <div class="outline-points">
+      <h5>Pontos Principais</h5>
+      <ul>
+        <li><strong>Lembrete do Passado:</strong> “O Senhor vosso Deus... lutou por vós” (23:3). Josué recorda as conquistas operadas por Deus para motivar a fidelidade contínua.</li>
+        <li><strong>Advertência para o Presente:</strong> “Não se juntem a estas nações” (23:7). Um forte apelo para resguardar a integridade espiritual e a santidade diante do mundo.</li>
+        <li><strong>Promessas e Ameaças Futuras:</strong> “Assim como toda boa palavra veio sobre vós... o Senhor trará sobre vós toda palavra má” (23:15). A fidelidade de Deus garante o cumprimento integral das Suas palavras.</li>
+      </ul>
+    </div>
+    <div class="study-box">
+      <div class="study-section">
+        <strong>Aplicação Prática:</strong> A liderança espiritual madura equilibra a recordação da graça amorosa de Deus no passado com advertências sóbrias e transparentes sobre as repercussões da desobediência e do pecado.
+      </div>
+      <div class="study-section">
+        <strong>Oração:</strong> Pai, obrigado por suas promessas fiéis e advertências claras. Ajude-me a manter um equilíbrio saudável entre a celebração de sua graça e o respeito santo por seus juízos. Amém.
+      </div>
+    </div>
+  </div>
+</div>`,
           `<h3>Esboço 86: “A Assembleia em Siquém”</h3>
 <blockquote class="ancient-quote">
   "Ensino Bíblico: Josué reúne todo o Israel em Siquém, o local histórico da renovação da aliança, e recapitula a história da salvação desde Abraão até a conquista. Este relato destaca as intervenções graciosas de Deus apesar da infidelidade humana. Aplicação Prática: A fé é fortalecida quando nos lembramos da fidelidade histórica de Deus. Devemos recapitular e celebrar regularmente as grandes obras de Deus na história da salvação e em nossas próprias vidas.Oração:
@@ -2289,14 +2344,14 @@ Aplicação Prática Pratique o auto-exame espiritual regularmente Confesse e ab
 </blockquote>`,
           `<h3>Esboço 101: Estratégias Renovadas</h3>
 <blockquote class="ancient-quote">
-  "Ensino Bíblico Depois de purificar o acampamento, Deus deu a Josué uma nova estratégia para conquistar Ai. Desta vez, ele usaria uma emboscada em vez de um ataque frontal. Isso nos ensina que Deus tem múltiplas estratégias para nos levar à vitória, e que após o fracasso sempre há uma oportunidade para um novo começo.Aplicação PráticaOração: "Senhor Estrategista, dê-me sabedoria para implementar novos métodos após o fracasso. Restaure minha confiança e ajude-me a planejar meticulosamente, pois confio plenamente em você. Amém."Busque novas estratégiasApós o fracasso, não repita os mesmos métodos; Busque a sabedoria divina para encontrar novas abordagens.Recupere a confiançaNão permita que os fracassos do passado o paralisem; Ouça o “não temas” que Deus fala ao seu coração. Planeje meticulosamente Combine a fé com uma preparação cuidadosa; A confiança em Deus não exclui um planejamento detalhado.
-Obedeça completamente. Siga ao pé da letra todas as instruções divinas, sem omitir detalhes que pareçam insignificantes." — Josué 8:1-8
+  "Ensino Bíblico Depois de purificar o acampamento, Deus deu a Josué uma nova estratégia para conquistar Ai. Desta vez, ele usaria uma emboscada em vez de um ataque frontal. Isso nos ensina que Deus tem múltiplas estratégias para nos levar à vitória, e que após o fracasso sempre há uma oportunidade para um novo começo.Aplicação PráticaOração: "Senhor Estrategista, dê-me sabedoria para implementar novos métodos após o fracasso. Restaure minha confiança e ajude-me a planejar meticulosamente, pois confio plenamente em você. Amém."Busque novas estratéImplemente sem omissões Evite obediência seletiva; cumprir todos os mandamentos, mesmo os difíceis ou impopulares.
+Persevera Até Completar Não pare na metade do caminho; continue a obedecer até que a vontade divina seja completamente cumprida.Oração: "Pai Celestial, dá-me um espírito de total obediência à tua Palavra. Ajuda-me a conhecer claramente as tuas instruções, implementá-las sem omissões e perseverar até que a tua vontade seja concluída. Amém." — Josué 11:10-15
 </blockquote>`,
           `<h3>Esboço 102: Vitória Restaurada</h3>
 <blockquote class="ancient-quote">
   "Ensino Bíblico A conquista de Ai mostra o poder da restauração divina. Onde antes havia derrota, agora há vitória. A obediência exata às instruções de Deus, a unidade do povo e a perseverança na batalha resultaram em triunfo completo.
-Aplicação PráticaAcredite firmemente na possibilidade de recuperação espiritualAprenda com os fracassos do passado para melhorar sua estratégiaCelebre as vitórias restauradas como um testemunho da fidelidade de Deus
-Oração: "Deus das segundas chances, obrigado por não me abandonar após o fracasso. Ajude-me a subir com determinação renovada e a seguir fielmente suas instruções até alcançar a vitória completa. Amém." — Josué 8:18-29
+Aplicação Prática Acredite firmemente na possibilidade de recuperação espiritual. Aprenda com os fracassos do passado para melhorar sua estratégia. Celebre as vitórias restauradas como um testemunho da fidelidade de Deus.
+Oração: "Deus das segundas chances, obrigado por não me abandonar após o fracasso. Ajude-me a erguer-me com determinação renovada e a seguir fielmente suas instruções até alcançar a vitória completa. Amém." — Josué 8:18-29
 </blockquote>`,
           `<h3>Esboço 103: O Altar da Memória</h3>
 <blockquote class="ancient-quote">
@@ -2358,11 +2413,14 @@ Oração: "Deus dos Exércitos, ajude-me a reconhecer os padrões de oposição 
 <blockquote class="ancient-quote">
   "Ensino Bíblico Josué seguiu as instruções de Moisés ao pé da letra, sem deixar nada de fora. Esta obediência meticulosa à palavra revelada foi a chave para o seu sucesso militar e espiritual. O texto enfatiza que Josué “não deixou nada por fazer de tudo o que Senhor ordenara a Moisés”. Aplicação Prática Conheça as Instruções Estude cuidadosamente a Palavra de Deus para entender claramente Seus mandamentos.
 Implemente sem omissões Evite obediência seletiva; cumprir todos os mandamentos, mesmo os difíceis ou impopulares.
-Persevera Hasta CompletarNo te detengas a metade del camino; continue a obedecer até que a vontade divina seja completamente cumprida.Oração: "Pai Celestial, dá-me um espírito de total obediência à tua Palavra. Ajuda-me a conhecer claramente as tuas instruções, implementá-las sem omissões e perseverar até que a tua vontade seja concluída. Amém." — Josué 11:10-15
+Perseverar Até Completar: Não pare na metade do caminho; continue a obedecer até que a vontade divina seja completamente cumprida.Oração: "Pai Celestial, dá-me um espírito de total obediência à tua Palavra. Ajuda-me a conhecer claramente as tuas instruções, implementá-las sem omissões e perseverar até que a tua vontade seja concluída. Amém." — Josué 11:10-15
 </blockquote>`,
-          `<h3>Bosquejo 114: La Guerra Prolongada</h3>
-<p><strong>Reflexão:</strong> La conquista de Canaán no fue instantánea sino un proceso prolongada. Josué "hizo guerra por mucho tempo" contra os reyes cananeos. Esta realidade nos ensina que algumas batalhas espirituais exigem perseverança a longo prazo e que Deus às vezes permite que as lutas se estendam para cumprir propósitos mais profundos.
-Aplicação Prática Desenvolva resiliência espiritual para conflitos duradouros Reconheça que o tempo de Deus raramente corresponde às nossas expectativas Busque propósitos divinos em longas batalhas Oração: "Deus da paciência, fortaleça meu espírito para longas batalhas. Ajude-me a perseverar quando a vitória não vem rapidamente. Revele-me seus propósitos mais profundos em minhas longas lutas. Amém."</p>`,
+          `<h3>Esboço 114: A Guerra Prolongada</h3>
+<blockquote class="ancient-quote">
+  "Ensino Bíblico A conquista de Canaã não foi instantânea, mas um processo prolongado. Josué guerreou por muito tempo contra os reis cananeus. Esta realidade nos ensina que algumas batalhas espirituais exigem perseverança a longo prazo e que Deus, às vezes, permite que as lutas se estendam para cumprir propósitos mais profundos.
+Aplicação Prática Desenvolva resiliência espiritual para conflitos duradouros. Reconheça que o tempo de Deus raramente corresponde às nossas expectativas. Busque os propósitos divinos nas longas batalhas.
+Oração: "Deus da paciência, fortalece o meu espírito para longas batalhas. Ajuda-me a perseverar quando a vitória não vem rapidamente. Revela-me os teus propósitos mais profundos em minhas longas lutas. Amém." — Josué 11:16-20
+</blockquote>`,
           `<h3>Esboço 115: A Derrota dos Gigantes</h3>
 <blockquote class="ancient-quote">
   "Ensino Bíblico Josué derrotou os temíveis anaquins, gigantes que aterrorizaram os espiões israelitas quarenta anos antes. A vitória sobre estes formidáveis ​​inimigos demonstra que os “gigantes” que antes nos paralisavam de medo podem ser vencidos quando avançamos com fé e obediência. Aplicação Prática Identifique seus “Anakims” Reconheça os medos, hábitos ou circunstâncias que parecem gigantescos e invencíveis em sua vida. Enfrente o que os outros evitam Muitos fogem dos “gigantes”; os vencedores os enfrentam com coragem apoiada pela fé.Celebre a Vitória CompletaReconheça e seja grato quando Deus o ajuda a superar obstáculos que pareciam intransponíveis.Oração: "Deus, Vitor, dê-me coragem para enfrentar os 'gigantes' em minha vida que outros evitam. Fortaleça minha fé para seguir em frente contra medos paralisantes. Obrigado porque com seu poder posso conquistar o que parece invencível. Amém." — Josué 11:21-23
@@ -2692,9 +2750,37 @@ Zelo pela Santidade Finéias demonstrou seu zelo pela santidade de Deus quando a
 O Representante Divino Phinehas também serviu como emissário em assuntos delicados (Josué 22), demonstrando sabedoria na resolução de conflitos e na manutenção da unidade.
 Oração FinalSenhor, como Phinehas, desejamos ter zelo pela sua santidade e sabedoria para resolver conflitos em seu povo. Crie líderes com integridade e paixão por você, que continuem o legado espiritual das gerações anteriores. Em nome de Jesus, amém." — Josué 24:33
 </blockquote>`,
-          `<h3>Bǔsquŝƪǔ 153: EƷ ÚƷtƖǂǔ DƖsŉursǔ őŝ JǔsuŞJǔsuŞ 23:1-16
-EǇsŝǒġǇzġ BƘŃƷƖŉġDepois de um longo período de paz, Josué, já idoso, convocou os líderes de Israel para lhes dar as instruções finais. Ele os lembrou de como Deus cumpriu todas as suas promessas e os advertiu sobre as consequências do abandono da aliança. ApƷƖŉġŉƖǕǇ PrĢŉtƖŉġLíderes sábios preparam a próxima geração antes de partir. Devemos transmitir as lições aprendidas e alertar sobre perigos potenciais. A lembrança constante da fidelidade de Deus no passado fortalece a fé para o futuro.
-OrġŉƖǕǇ FƖǇġƷDeus das gerações, ajuda-nos a transmitir fielmente a tua verdade àqueles que nos seguem. Tal como Josué, queremos lembrar-nos das tuas obras e alertar sobre os perigos da infidelidade. Dá-nos sabedoria para preparar o caminho para aqueles que continuarão depois de nós. Amém.</h3>`,
+          `<div class="outline-card">
+  <div class="outline-header">
+    <div class="outline-header-text">
+      <span class="outline-number">Esboço 153</span>
+      <h4 class="outline-title">O Último Discurso de Josué</h4>
+      <span class="outline-ref">Josué 23:1-16</span>
+    </div>
+    <div class="accordion-icon">▼</div>
+  </div>
+  <div class="outline-header-border"></div>
+  <div class="outline-content">
+    <div class="scripture-box">
+      "E eis que estou hoje indo pelo caminho de toda a terra; e vós sabeis, com todo o vosso coração e com toda a vossa alma, que nem uma só promessa falhou de todas as boas palavras que o Senhor vosso Deus vos prometeu." (23:14)
+    </div>
+    <div class="outline-points">
+      <h5>Pontos Principais</h5>
+      <ul>
+        <li><strong>Ensino Bíblico:</strong> Depois de um longo período de paz, Josué, já avançado em idade, convoca os líderes de Israel para suas instruções derradeiras. Recorda-lhes o cumprimento perfeito de todas as promessas de Deus e adverte severamente contra a quebra da aliança.</li>
+        <li><strong>Aplicação Prática:</strong> Líderes espirituais sábios preparam a próxima geração de servos. Temos o dever de transmitir as lições vivenciadas com Deus e advertir sobre os riscos morais. A lembrança das vitórias passadas fortalece a fé no porvir.</li>
+      </ul>
+    </div>
+    <div class="study-box">
+      <div class="study-section">
+        <strong>Reflexão Espiritual:</strong> Deixar um legado saudável de fidelidade é o maior fruto que podemos produzir. A exortação de Josué convida cada um de nós a olhar para nossa fidelidade às promessas eternas.
+      </div>
+      <div class="study-section">
+        <strong>Oração Final:</strong> Deus das gerações, ajuda-nos a transmitir fielmente a tua verdade àqueles que nos seguem. Tal como Josué, queremos lembrar-nos das tuas obras e alertar sobre os perigos da infidelidade. Dá-nos sabedoria para preparar o caminho para aqueles que continuarão depois de nós. Amém.
+      </div>
+    </div>
+  </div>
+</div>`,
           `<h3>Esboço 154: O Testemunho da Fidelidade Divina</h3>
 <blockquote class="ancient-quote">
   "E eis que estou prestes a entrar hoje no caminho de toda a terra; reconhece, portanto, de todo o teu coração e de toda a tua alma, que nem uma palavra de todas as boas palavras que Senhor, teu Deus, falou de ti falhou; todas elas te aconteceram, nenhuma delas falhou.” Consciência da Mortalidade Josué reconhece que está perto de "entrar no caminho de toda a terra" (morrer), o que dá peso às suas palavras finais. Testemunho PessoalDepois de servir a Deus durante toda a sua vida, Josué pode testemunhar pessoalmente que Deus cumpriu cada uma de suas promessas.

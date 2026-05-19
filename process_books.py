@@ -17,46 +17,12 @@ class BookProcessor:
     def translate(self, text):
         if not text:
             return ""
-        # Clean some known weird Spanish characters/artifacts from extraction
-        text = text.replace("Bǔsquŝƪǔ", "Busca")
-        text = text.replace("Búsqueda", "Busca")
-        
-        # Core translation
-        translated = self.translator.translate_text(text)
-        
-        # Extra fine-tuning of translations for Portuguese readability
-        portuguese_replacements = {
-            "Génesis": "Gênesis",
-            "Éxodo": "Êxodo",
-            "Levítico": "Levítico",
-            "Josué": "Josué",
-            "Explicación:": "Reflexão:",
-            "Explicación": "Reflexão",
-            "Aplicación:": "Aplicação:",
-            "Aplicación": "Aplicação",
-            "Oración:": "Oração:",
-            "Oración": "Oração",
-            "Enseñanza:": "Reflexão:",
-            "Enseñanza": "Reflexão",
-            "Meditación:": "Reflexão:",
-            "Meditación": "Reflexão",
-            "jehová": "Senhor",
-            "Jehová": "Senhor",
-            "Moisés": "Moisés",
-            "sacerdote": "sacerdote",
-            "tabernáculo": "tabernáculo",
-            "holocausto": "holocausto",
-            "expiación": "expiação",
-            "ofrenda": "oferta",
-            "pecado": "pecado",
-            "perdón": "perdão"
-        }
-        
-        for key, val in portuguese_replacements.items():
-            translated = re.sub(r'\b' + re.escape(key) + r'\b', val, translated)
-            translated = re.sub(r'\b' + re.escape(key.capitalize()) + r'\b', val.capitalize(), translated)
-            
-        return translated
+        # Garantir a máxima reverência usando os termos tradicionais em português
+        text = text.replace("Jeová", "Senhor")
+        text = text.replace("Jehová", "Senhor")
+        text = text.replace("jeová", "Senhor")
+        text = text.replace("jehová", "Senhor")
+        return text.strip()
 
     def parse_page_structure(self, page_text, book_name):
         # Normalize whitespace
@@ -157,10 +123,10 @@ class BookProcessor:
     def parse_header_and_verse(self, part1, book_name):
         # Build a resilient regex pattern for the book name that tolerates encoding/replacement artifacts
         book_patterns = {
-            "Génesis": r"(?:G[eé\ufffd]?nesis|G\u00e9nesis|Gnesis)",
-            "Éxodo": r"(?:[EÉeé\ufffd]?xodo|xodo|[X\ufffd]ODO)",
-            "Levítico": r"(?:Lev[ií\ufffd]?tico|Lev\u00edtico|Levtico|LEVTICO)",
-            "Josué": r"(?:Josu[eé\ufffd]?|Josu\u00e9|Josu|JOSU)"
+            "Gênesis": r"(?:G[eéêÉÊ\ufffd]?nesis|G\u00e9nesis|Gnesis|Gênesis|Gênesis)",
+            "Êxodo": r"(?:[EÉeéêÊ\ufffd]?xodo|xodo|[X\ufffd]ODO|Êxodo|êxodo)",
+            "Levítico": r"(?:Lev[ií\ufffd]?tico|Lev\u00edtico|Levtico|LEVTICO|Levítico|levítico)",
+            "Josué": r"(?:Josu[eéêÉÊ\ufffd]?|Josu\u00e9|Josu|JOSU|Josué|josué)"
         }
         pattern_str = book_patterns.get(book_name, re.escape(book_name))
         ref_pattern = rf'({pattern_str})\s+(\d+:\d+(?:-\d+)?)'
@@ -434,22 +400,22 @@ class BookProcessor:
     def generate_all_books(self):
         # 1. Process Genesis
         genesis_chapters, genesis_pages = self.process_versicle_book(
-            'extracted_genesis.txt', 'Génesis', 'Gênesis'
+            'extracted_genesis_pt.txt', 'Gênesis', 'Gênesis'
         )
         
         # 2. Process Exodus
         exodus_chapters, exodus_pages = self.process_versicle_book(
-            'extracted_exodus.txt', 'Éxodo', 'Êxodo'
+            'extracted_exodus_pt.txt', 'Êxodo', 'Êxodo'
         )
         
         # 3. Process Leviticus
         leviticus_chapters, leviticus_pages = self.process_versicle_book(
-            'extracted_leviticus.txt', 'Levítico', 'Levítico'
+            'extracted_leviticus_pt.txt', 'Levítico', 'Levítico'
         )
         
         # 4. Process Joshua Outlines
         joshua_chapters, joshua_pages = self.process_joshua_outlines(
-            'extracted_josue.txt'
+            'extracted_josue_pt.txt'
         )
         
         # Construct the javascript definitions
